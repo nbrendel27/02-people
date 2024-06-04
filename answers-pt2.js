@@ -35,4 +35,14 @@ db.submissions.insertMany([{title: "The River Bend", upvotes: 10, downvotes: 2, 
 {title: "Nine Lives", upvotes: 7, downvotes: 0, artist: ObjectId('665f31b7ccca757b69f56f37')}, 
 {title: "Star Bright", upvotes: 19, downvotes: 3, artist: ObjectId('665f31b7ccca757b69f56fba')}, 
 {title: "Why Like This?", upvotes: 1, downvotes: 5, artist: ObjectId('665f31b7ccca757b69f56f40')}, 
-{title: "Non Sequitur", upvotes: 11, downvotes: 1, artist: <ID of Gerald Bailey></ID>}])
+{title: "Non Sequitur", upvotes: 11, downvotes: 1, artist: ObjectId('665f31b7ccca757b69f56f07')}])
+//#12
+db.submissions.updateOne({title: "The River Bend"}, {$inc: {upvotes: 2}});
+//#13
+db.submissions.updateMany({upvotes: {$gte: 10}}, {round2: true})
+//#14
+db.people.updateOne({first_name: "Helen", last_name: "Clark"}, {$push: {children: {name: "Melanie", age: 0}}})
+//#15
+db.people.updateOne({first_name: "Joan", last_name: "Bishop"}, {$set: {"children.$[element].name": "Cat"}, $inc: {"children.$[element].age": 1}}, {arrayFilters: [ { "element.name": "Catherine"} ] })
+//#16
+db.submissions.find({ $expr : {$gt: ["$downvotes", "$upvotes"] } });
